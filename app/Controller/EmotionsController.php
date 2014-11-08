@@ -47,11 +47,12 @@ class EmotionsController extends AppController {
  * @return void
  */
 	public function add() {
+    $this->layout = false;
 		if ($this->request->is('post')) {
 			$this->Emotion->create();
 			if ($this->Emotion->save($this->request->data)) {
 				$this->Session->setFlash(__('The emotion has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'add'));
 			} else {
 				$this->Session->setFlash(__('The emotion could not be saved. Please, try again.'));
 			}

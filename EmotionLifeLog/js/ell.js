@@ -1,16 +1,46 @@
 'use strict';
 
-var URL = 'https://api.tokyometroapp.jp/api/v2/datapoints';
+var baseURL = 'https://api.tokyometroapp.jp/api/v2/datapoints';
 var TOKEN = '22b4f2f8dd953bb676f7145b0777fb20e7d288e5f3662dd3837ccb6854eefadd';
 // 仮設定。本当はユーザーの入力からとる。
 var destination = 'odpt.StationFacility:TokyoMetro.KokkaiGijidomae';
 var railway = 'odpt.Railway:TokyoMetro.Marunouchi';
 var railDirection = 'odpt.RailDirection:TokyoMetro.Ikebukuro';
 
+var myVideo; // 画像保存
+
+function startVideo() {
+  navigator.webkitGetUserMedia(
+    {video: true},
+    function(localMediaStream) {
+      myVideo  = document.getElementById('myVideo');
+      myVideo.src = window.URL.createObjectURL(localMediaStream);
+    },
+    function(err) {
+      alert('カメラから映像を取得することができませんでした。');  
+      console.log(err);
+    }
+  );
+}
+
+var capture = function(){  
+  var canvas = document.getElementById("canvas");
+  context = canvas.getContext("2d");
+  context.drawImage(myVideo, 0, 0, 640, 480);
+  $("#captured").attr("href", canvas.toDataURL("image/png"));
+};
+
+// カメラ画像が使えるか判定
+if (!navigator.getUserMedia && !navigator.webkitGetUserMedia) {
+  alert('webkit系ブラウザでないか、もしくはgetUserMediaがサポートされていません');
+} else {
+  startVideo();
+}
+
 $(function() {
     $("#search").click(function() {
       $.ajax({
-        url: URL,
+        url: baseURL,
         data: {
           'acl:consumerKey': TOKEN,
           'rdf:type': 'odpt:StationFacility',

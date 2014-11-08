@@ -1,3 +1,105 @@
+<!DOCTYPE html>
+<html lang='ja'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>感情ライフログ</title>
+
+    <!-- Bootstrap -->
+    <?php echo $this->Html->css('bootstrap.min');?>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js'></script>
+      <script src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js'></script>
+    <![endif]-->
+
+    <?php echo $this->Html->css('ell');?>
+</head>
+
+<body>
+    <div class='container'>
+        <h1>感情ライフログ</h1> 
+        <?php echo $this->Form->create('Emotion'); ?>
+        <?php	echo $this->Form->input('Emotion.my_emotion', array('type' => 'hidden', 'value' => ''));?> 
+        <?php	echo $this->Form->input('Emotion.record_date', array('type' => 'hidden', 'value' => date("Y-m-d h:i:s")));?> 
+        <div class='row'>
+            <div class='col-md-6'>
+                <h2><span class='label label-info'>今どんな気分？</span></h2>
+                <p>メモを書いて、今の感情に近いボタンを押してください。押したら、すぐに登録されます。</p>
+                <h3><span class='label label-info'>メモ</span></h3>
+<?php echo $this->Form->input('memo', array('class' => 'form-control', 'rows' => '3', 'placeholder' => '空でもいいけど、入れると感情分析結果がみれるよ。'));?>
+                <div id='emotion'>
+                    <button id='happy' type='button' class='btn btn-warning'>Happy</button>
+                    <button id='sad' type='button' class='btn btn-primary'>Sad</button>
+                    <button id='angry' type='button' class='btn btn-danger'>Angry</button>
+                    <button id='fear' type='button' class='btn btn-success'>Fear</button>
+                </div>
+            </div>
+          </form>
+          <form>
+            <div class="col-md-6">
+                <h2><span class='label label-info'>最近のあなたの感情をみてみましょう</span></h2>
+                <p>更新ボタンを押すと、最新の状況がみれます。</p>
+                <button id='output' type='submit' class='btn btn-primary'>更新</button>
+                <hr>
+                <h3>感情Max写真</h3>
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <div id='max-happy' class='dummy-img'>ここに感情ラインチャート(自分のボタン入力)</div>
+                        <div id='max-sad' class='dummy-img'>ここに感情ラインチャート(自分のボタン入力)</div>
+                    </div>
+                    <div class='col-md-6'>
+                        <div id='max-angry' class='dummy-img'>ここに感情ラインチャート(メモから解析)</div>
+                        <div id='max-fear' class='dummy-img'>ここに感情ラインチャート(画像から解析)</div>
+                    </div>
+                </div>
+                <hr>
+                <h3>割合</h3>
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <div id='pi-self' class='dummy-img'>ここに感情円グラフ(自分のボタン入力)</div>
+                    </div>
+                    <div class='col-md-6'>
+                        <div id='pi-memo' class='dummy-img'>ここに感情円グラフ(メモから解析)</div>
+                        <div id='pi-image' class='dummy-img'>ここに感情円グラフ(画像から解析)</div>
+                    </div>
+                </div>
+                <hr>
+                <h3>時系列</h3>
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <div id='line-self' class='dummy-img'>ここに感情ラインチャート(自分のボタン入力)</div>
+                    </div>
+                    <div class='col-md-6'>
+                        <div id='line-memo' class='dummy-img'>ここに感情ラインチャート(メモから解析)</div>
+                        <div id='line-image' class='dummy-img'>ここに感情ラインチャート(画像から解析)</div>
+                    </div>
+                </div>
+            </div>
+</form>
+        </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <?php echo $this->Html->script('jquery-2.1.1.min');?>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <?php echo $this->Html->script('bootstrap.min');?>
+    <?php echo $this->Html->script('ell');?>
+<script>
+$('#emotion').find('.btn').click(function() {
+    var label = $(this).attr('id');
+    $('#EmotionMyEmotion').val(label);
+    $('form#EmotionAddForm').submit();
+});
+</script>
+</body>
+
+</html>
+<!--
+
 <div class="emotions form">
 <?php echo $this->Form->create('Emotion'); ?>
 	<fieldset>
@@ -25,3 +127,4 @@
 		<li><?php echo $this->Html->link(__('List Emotions'), array('action' => 'index')); ?></li>
 	</ul>
 </div>
+-->

@@ -15,6 +15,7 @@ function startVideo() {
     function(localMediaStream) {
       myVideo  = document.getElementById('myVideo');
       myVideo.src = window.URL.createObjectURL(localMediaStream);
+      myVideo.play();
     },
     function(err) {
       alert('カメラから映像を取得することができませんでした。');  
@@ -24,9 +25,9 @@ function startVideo() {
 }
 
 var capture = function(){  
-  var canvas = document.getElementById("canvas");
-  context = canvas.getContext("2d");
-  context.drawImage(myVideo, 0, 0, 640, 480);
+  var canvas = document.getElementById("captured");
+  var context = canvas.getContext("2d");
+  context.drawImage(myVideo, 0, 0, 160, 120);
   $("#captured").attr("href", canvas.toDataURL("image/png"));
 };
 

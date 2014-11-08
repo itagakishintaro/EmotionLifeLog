@@ -17,6 +17,19 @@ function startVideo() {
   );
 }
 
+function updateFigures(){
+  var emotions = ["happy", "sad", "angry", "fear"];
+
+  $.ajax({
+    url: "/getHappyFace"
+  }).done(function(result){  
+    for(var i=0; i<result.length; i++){
+      var obj = result[i];
+      $("#max-" + obj.my_emotion).attr("src", obj.img_file);
+    }
+  })
+}
+
 var capture = function(){  
   var canvas = document.getElementById("captured");
   var context = canvas.getContext("2d");
@@ -32,6 +45,7 @@ if (!navigator.getUserMedia && !navigator.webkitGetUserMedia) {
   startVideo();
 }
 
+updateMaxFigures();
 
 google.load("visualization", "1", {
     packages: ["corechart"]
@@ -46,7 +60,8 @@ function drawPiSelf() {
             var chart = new google.visualization.PieChart(document.getElementById('pi-self'));
             var data = createPiSelfData(jsonData);
             var options = {
-                title: '自己評価の感情（割合）'
+                title: '自己評価の感情（割合）',
+                colors: ['red', 'green', 'orange', 'blue']
             };
             chart.draw(data, options);
         }).fail(function() {});

@@ -1,0 +1,47 @@
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+   <h1> Capture </h1>
+    <button onclick="getMedia()">キャプチャ開始</button>
+    <video id="myVideo"></video>
+
+    <h1> Snap </h1>
+    <button id="snap">Snap Photo</button>
+    <canvas id="canvas" width="640" height="480"></canvas>
+    <h1> DL 
+    <a href="" id = "captured">Download link</a>
+    </h1>
+
+<script type="text/javascript">
+      if (!navigator.getUserMedia && !navigator.webkitGetUserMedia) {
+        alert('webkit系ブラウザでないか、もしくはgetUserMediaがサポートされていません');
+      }
+      function getMedia() {
+        navigator.webkitGetUserMedia(
+          {video: true},
+          function(localMediaStream) {
+            myVideo  = document.getElementById('myVideo');
+            console.log("aa");
+            debug = localMediaStream;
+            src = window.URL.createObjectURL(localMediaStream);
+            myVideo.src = src;
+            myVideo.play();
+          },
+          function(err) {
+            alert('カメラから映像を取得することができませんでした。');  
+            console.log(err);
+          }
+        );
+      }
+    document.getElementById("snap").addEventListener("click", function() {
+    var canvas = document.getElementById("canvas");
+    context = canvas.getContext("2d");
+    context.drawImage(myVideo, 0, 0, 640, 480);
+    $("#captured").attr("href", canvas.toDataURL("image/png"));
+        // $.ajax("http://twitter.com");
+    });
+</script>
+</body>
+</html>

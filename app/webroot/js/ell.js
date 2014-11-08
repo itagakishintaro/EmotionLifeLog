@@ -41,7 +41,7 @@ google.setOnLoadCallback(drawLineSelf);
 
 function drawPiSelf() {
 
-    $.getJSON("/firsthack/emotions/getMyEmotion", {},
+    $.getJSON("/EmotionLifeLog/emotions/getMyEmotion", {},
         function(jsonData) {
             var chart = new google.visualization.PieChart(document.getElementById('pi-self'));
             var data = createPiSelfData(jsonData);

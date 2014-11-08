@@ -59,6 +59,14 @@ class EmotionsController extends AppController {
 		}
 	}
 
+	public function getMyEmotion() {
+		$this->autoRender = false;
+		$jsonData = array();
+		$jsonData = $this->Emotion->getSumMyEmotion();
+		echo json_encode($jsonData);
+	}
+
+
 /**
  * edit method
  *

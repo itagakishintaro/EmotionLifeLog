@@ -1,0 +1,14 @@
+h1, h2 {
+	margin-bottom: 2rem;
+}
+
+.dummy-img {
+	width: 200px;
+	height: 200px;
+	border-style: solid;
+	border-color: gray;
+}
+
+#emotion{
+	margin-top: 1rem;
+}

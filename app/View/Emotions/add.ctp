@@ -38,6 +38,10 @@
                     <button id='angry' type='button' class='btn btn-danger'>Angry</button>
                     <button id='fear' type='button' class='btn btn-success'>Fear</button>
                 </div>
+                <div class="row">
+                    <canvas width="160" height="120" id="captured"/>
+                    <video width="160" id="myVideo" />
+                </div>
             </div>
           </form>
           <form>
@@ -91,9 +95,10 @@
     <?php echo $this->Html->script('ell');?>
 <script>
 $('#emotion').find('.btn').click(function() {
+    var image_file = capture();
     var label = $(this).attr('id');
     $('#EmotionMyEmotion').val(label);
-    $('#EmotionImgFile').val();// ここに画像データ入れる
+    $('#EmotionImgFile').val(image_file);// ここに画像データ入れる
     $('form#EmotionAddForm').submit();
 });
 </script>

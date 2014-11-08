@@ -21,11 +21,11 @@ function updateFigures(){
   var emotions = ["happy", "sad", "angry", "fear"];
 
   $.ajax({
-    url: "/getFace"
+    url: "/getHappyFace"
   }).done(function(result){  
-    for(var i=0; i<4; i++){
-         var em = emotions[i];
-         $("#max-" + em).attr("src", result[em]);
+    for(var i=0; i<result.length; i++){
+      var obj = result[i];
+      $("#max-" + obj.my_emotion).attr("src", obj.img_file);
     }
   })
 }

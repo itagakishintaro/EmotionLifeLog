@@ -17,6 +17,19 @@ function startVideo() {
   );
 }
 
+function updateFigures(){
+  var emotions = ["happy", "sad", "angry", "fear"];
+
+  $.ajax({
+    url: "/getFace"
+  }).done(function(result){  
+    for(var i=0; i<4; i++){
+         var em = emotions[i];
+         $("#max-" + em).attr("src", result[em]);
+    }
+  })
+}
+
 var capture = function(){  
   var canvas = document.getElementById("captured");
   var context = canvas.getContext("2d");
@@ -32,6 +45,7 @@ if (!navigator.getUserMedia && !navigator.webkitGetUserMedia) {
   startVideo();
 }
 
+updateMaxFigures();
 
 google.load("visualization", "1", {
     packages: ["corechart"]

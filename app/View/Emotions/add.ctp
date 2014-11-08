@@ -70,10 +70,10 @@
                 <div id='line-image' class='dummy-img'>ここに感情ラインチャート(画像から解析)</div>
                 <hr>
                 <h3>感情Max写真</h3>
-                <div id='max-happy' class='dummy-img'>ここに感情ラインチャート(自分のボタン入力)</div>
-                <div id='max-sad' class='dummy-img'>ここに感情ラインチャート(自分のボタン入力)</div>
-                <div id='max-angry' class='dummy-img'>ここに感情ラインチャート(メモから解析)</div>
-                <div id='max-fear' class='dummy-img'>ここに感情ラインチャート(画像から解析)</div>
+                <img id='max-happy' class='dummy-img'>ここに感情ラインチャート(自分のボタン入力)</div>
+                <img id='max-sad' class='dummy-img'>ここに感情ラインチャート(自分のボタン入力)</div>
+                <img id='max-angry' class='dummy-img'>ここに感情ラインチャート(メモから解析)</div>
+                <img id='max-fear' class='dummy-img'>ここに感情ラインチャート(画像から解析)</div>
             </div>
 </form>
         </div>

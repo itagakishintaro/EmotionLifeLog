@@ -60,7 +60,8 @@ function drawPiSelf() {
             var chart = new google.visualization.PieChart(document.getElementById('pi-self'));
             var data = createPiSelfData(jsonData);
             var options = {
-                title: '自己評価の感情（割合）'
+                title: '自己評価の感情（割合）',
+                colors: ['red', 'green', 'orange', 'blue']
             };
             chart.draw(data, options);
         }).fail(function() {});

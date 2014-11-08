@@ -22,9 +22,10 @@
 <body>
     <div class='container'>
         <h1>感情ライフログ</h1> 
-        <?php echo $this->Form->create('Emotion'); ?>
+        <?php echo $this->Form->create('Emotion', array('type' => 'file')); ?>
         <?php	echo $this->Form->input('Emotion.my_emotion', array('type' => 'hidden', 'value' => ''));?> 
         <?php	echo $this->Form->input('Emotion.record_date', array('type' => 'hidden', 'value' => date("Y-m-d h:i:s")));?> 
+        <?php	echo $this->Form->input('Emotion.img_file', array('type' => 'hidden', 'value' => ''));?> 
         <div class='row'>
             <div class='col-md-6'>
                 <h2><span class='label label-info'>今どんな気分？</span></h2>
@@ -92,6 +93,7 @@
 $('#emotion').find('.btn').click(function() {
     var label = $(this).attr('id');
     $('#EmotionMyEmotion').val(label);
+    $('#EmotionImgFile').val();// ここに画像データ入れる
     $('form#EmotionAddForm').submit();
 });
 </script>

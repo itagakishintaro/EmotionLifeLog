@@ -17,6 +17,7 @@
     <![endif]-->
 
     <?php echo $this->Html->css('ell');?>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 </head>
 
 <body>
@@ -24,6 +25,7 @@
         <h1>感情ライフログ</h1> 
         <?php echo $this->Form->create('Emotion'); ?>
         <?php	echo $this->Form->input('Emotion.my_emotion', array('type' => 'hidden', 'value' => ''));?> 
+        <?php echo $this->Form->input('Emotion.my_emotion_val', array('type' => 'hidden', 'value' => ''));?>  
         <?php	echo $this->Form->input('Emotion.record_date', array('type' => 'hidden', 'value' => date("Y-m-d h:i:s")));?> 
         <div class='row'>
             <div class='col-md-6'>
@@ -32,6 +34,12 @@
                 <h3><span class='label label-info'>メモ</span></h3>
 <?php echo $this->Form->input('memo', array('class' => 'form-control', 'rows' => '3', 'placeholder' => '空でもいいけど、入れると感情分析結果がみれるよ。'));?>
                 <div id='emotion'>
+                    <h3>
+                        <span class='label label-default'>感情の度合い</span>
+                        <span id="show-range">50</span>
+                    </h3>
+                    <p>※最小が0で最大が100です。</p>
+                    <div><input id='range' type='range' min='0' max='100' step='1' onchange='showValue()'  /></div>
                     <button id='happy' type='button' class='btn btn-warning'>Happy</button>
                     <button id='sad' type='button' class='btn btn-primary'>Sad</button>
                     <button id='angry' type='button' class='btn btn-danger'>Angry</button>
@@ -41,43 +49,26 @@
           </form>
           <form>
             <div class="col-md-6">
-                <h2><span class='label label-info'>最近のあなたの感情をみてみましょう</span></h2>
-                <p>更新ボタンを押すと、最新の状況がみれます。</p>
-                <button id='output' type='submit' class='btn btn-primary'>更新</button>
-                <hr>
-                <h3>感情Max写真</h3>
-                <div class='row'>
-                    <div class='col-md-6'>
-                        <div id='max-happy' class='dummy-img'>ここに感情ラインチャート(自分のボタン入力)</div>
-                        <div id='max-sad' class='dummy-img'>ここに感情ラインチャート(自分のボタン入力)</div>
-                    </div>
-                    <div class='col-md-6'>
-                        <div id='max-angry' class='dummy-img'>ここに感情ラインチャート(メモから解析)</div>
-                        <div id='max-fear' class='dummy-img'>ここに感情ラインチャート(画像から解析)</div>
-                    </div>
-                </div>
+                                <h2><span class='label label-info'>最近のあなたの感情</span></h2>
+                <p>更新ボタンを押すと、最新の状況がみれます。オススメアロマボタンを押すと、オススメアロマが表示されます。</p>
+                <button id='output' type='button' class='btn btn-primary'>更新</button>
+                <button id='output' type='button' class='btn btn-success'>オススメアロマ</button>
                 <hr>
                 <h3>割合</h3>
-                <div class='row'>
-                    <div class='col-md-6'>
-                        <div id='pi-self' class='dummy-img'>ここに感情円グラフ(自分のボタン入力)</div>
-                    </div>
-                    <div class='col-md-6'>
-                        <div id='pi-memo' class='dummy-img'>ここに感情円グラフ(メモから解析)</div>
-                        <div id='pi-image' class='dummy-img'>ここに感情円グラフ(画像から解析)</div>
-                    </div>
-                </div>
+                <div id='pi-self' class='chart'>ここに感情円グラフ(自分のボタン入力)</div>
+                <div id='pi-memo' class='dummy-img'>ここに感情円グラフ(メモから解析)</div>
+                <div id='pi-image' class='dummy-img'>ここに感情円グラフ(画像から解析)</div>
                 <hr>
                 <h3>時系列</h3>
-                <div class='row'>
-                    <div class='col-md-6'>
-                        <div id='line-self' class='dummy-img'>ここに感情ラインチャート(自分のボタン入力)</div>
-                    </div>
-                    <div class='col-md-6'>
-                        <div id='line-memo' class='dummy-img'>ここに感情ラインチャート(メモから解析)</div>
-                        <div id='line-image' class='dummy-img'>ここに感情ラインチャート(画像から解析)</div>
-                    </div>
-                </div>
+                <div id='line-self' class='chart'>ここに感情ラインチャート(自分のボタン入力)</div>
+                <div id='line-memo' class='dummy-img'>ここに感情ラインチャート(メモから解析)</div>
+                <div id='line-image' class='dummy-img'>ここに感情ラインチャート(画像から解析)</div>
+                <hr>
+                <h3>感情Max写真</h3>
+                <div id='max-happy' class='dummy-img'>ここに感情ラインチャート(自分のボタン入力)</div>
+                <div id='max-sad' class='dummy-img'>ここに感情ラインチャート(自分のボタン入力)</div>
+                <div id='max-angry' class='dummy-img'>ここに感情ラインチャート(メモから解析)</div>
+                <div id='max-fear' class='dummy-img'>ここに感情ラインチャート(画像から解析)</div>
             </div>
 </form>
         </div>
@@ -92,6 +83,7 @@
 $('#emotion').find('.btn').click(function() {
     var label = $(this).attr('id');
     $('#EmotionMyEmotion').val(label);
+    $('#EmotionMyEmotionVal').val($('#show-range').text());
     $('form#EmotionAddForm').submit();
 });
 </script>

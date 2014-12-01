@@ -17,16 +17,17 @@ function startVideo() {
   );
 }
 
-function updateFigures(){
+function updateMaxFigures(){
   var emotions = ["happy", "sad", "angry", "fear"];
 
-  $.ajax({
-    url: "/getHappyFace"
-  }).done(function(result){  
-    for(var i=0; i<result.length; i++){
-      var obj = result[i];
-      $("#max-" + obj.my_emotion).attr("src", obj.img_file);
-    }
+  $.getJSON("/EmotionLifeLog/emotions/getHappyFace", {},
+    function(result){  
+       for(var i=0; i<result.length; i++){
+          var obj = result[i];
+          console.log(obj.Emotion.my_emotion);
+          console.log(obj.Emotion.img_file.length);
+          $("#max-" + obj.Emotion.my_emotion).attr("src", obj.Emotion.img_file);
+       }
   })
 }
 
@@ -34,7 +35,6 @@ var capture = function(){
   var canvas = document.getElementById("captured");
   var context = canvas.getContext("2d");
   context.drawImage(myVideo, 0, 0, 160, 120);
-  $("#captured").attr("href", canvas.toDataURL("image/png"));
   return canvas.toDataURL("image/png");
 };
 

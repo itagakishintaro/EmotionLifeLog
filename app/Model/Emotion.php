@@ -15,7 +15,7 @@ class Emotion extends AppModel {
         return $this->find('all', $options);
     }
 
-    public function getHappyFace() {
+    public function getMaxEmotionFaces() {
         $this->virtualFields['max'] = 0;
         $options = array(
             'conditions' => array('NOT' => array('Emotion.img_file' => null)),

@@ -52,7 +52,7 @@ function drawLineSelf() {
             var chart = new google.visualization.LineChart(document.getElementById('line-self'));
             var options = {
                 title: "自己評価の時系列 (割合)",
-                colors: ['red', 'green', 'orange', 'blue'];
+                colors: ['red', 'green', 'orange', 'blue']
             }
             chart.draw(data, options);
     });

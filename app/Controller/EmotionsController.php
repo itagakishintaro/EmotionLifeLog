@@ -87,8 +87,17 @@ $this->request->data["Emotion"]["analyzed_emotion"] = $data["face_detection"]["e
 
 	public function getMaxEmotionFaces() {
 		$this->autoRender = false;
-		$imageData = $this->Emotion->getMaxEmotionFaces();
+    $faces = array("happy", "sad", "angry", "fear");
+    foreach ($faces as $v) {
+        $imageData[] = $this->Emotion->getMaxEmotionFaces($v);
+    }
 		echo json_encode($imageData);
+	}
+
+	public function getHistorical() {
+		$this->autoRender = false;
+		$jsonData = $this->Emotion->getHistorical();
+		echo json_encode($jsonData);
 	}
 
 /**

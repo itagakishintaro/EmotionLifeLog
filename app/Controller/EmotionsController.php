@@ -67,9 +67,15 @@ class EmotionsController extends AppController {
 	}
 
 	public function getHappyFace() {
-		$this->autoRender = false;
+		//$this->autoRender = false;
 		$imageData = $this->Emotion->getHappyFace();
 		echo json_encode($imageData);
+	}
+
+	public function getHistorical() {
+		$this->autoRender = false;
+		$jsonData = $this->Emotion->getHistorical();
+		echo json_encode($jsonData);
 	}
 
 /**

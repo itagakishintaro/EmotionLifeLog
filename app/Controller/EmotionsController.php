@@ -54,19 +54,21 @@ $ch = curl_init();
 $img_file = $this->request->data["Emotion"]["img_file"];
 $image_array = explode(',', $img_file);
 
-$data = array('api_key' => 'k7e9tRIzzHDflSkG', 
+$opts = array('api_key' => 'k7e9tRIzzHDflSkG', 
               'api_secret' => 'l9lQe9mCjAmSEnEO', 
               'jobs' => 'face_emotion_part',
               'base64' => $image_array[1]);
 curl_setopt($ch, CURLOPT_URL, 'http://rekognition.com/func/api/');
 curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-curl_exec($ch);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $opts);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$data = curl_exec($ch);
+$data = json_decode($data, true);
 curl_close($ch);
 
 
 print_r($data);
-$this->request->data["Emotion"]["analyzed_emotion"] = $data["face_detection"]["emotion"];
+$this->request->data["Emotion"]["analyzed_emotion"] = $data["face_detection"][0]["emotion"];
 
 			$this->Emotion->create();
 			if ($this->Emotion->save($this->request->data)) {

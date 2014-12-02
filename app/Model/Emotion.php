@@ -26,11 +26,9 @@ class Emotion extends AppModel {
     }
 
     public function getHistorical() {
-        $this->virtualFields['max'] = 0;
         $options = array(
-            'conditions' => array('NOT' => array('Emotion.img_file' => null)),
-            'fields' => array('Emotion.img_file', 'Emotion.my_emotion', 'MAX(Emotion.my_emotion_val) as Emotion__max'),
-            'group' => array('Emotion.my_emotion')
+            'fields' => array('Emotion.record_date', 'Emotion.my_emotion', 'Emotion.my_emotion_val'),
+            'order' => array('Emotion.record_date')
         );
         return $this->find('all', $options);
     }

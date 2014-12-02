@@ -14,7 +14,7 @@
 			<th><?php echo $this->Paginator->sort('face_emotyion_val'); ?></th>
 			<th><?php echo $this->Paginator->sort('memo'); ?></th>
 			<th><?php echo $this->Paginator->sort('img1'); ?></th>
-			<th><?php echo $this->Paginator->sort('img_file'); ?></th>
+<!-- 			<th><?php echo $this->Paginator->sort('img_file'); ?></th> -->
 			<th><?php echo $this->Paginator->sort('created'); ?></th>
 			<th><?php echo $this->Paginator->sort('modified'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
@@ -34,7 +34,7 @@
 		<td><?php echo h($emotion['Emotion']['face_emotyion_val']); ?>&nbsp;</td>
 		<td><?php echo h($emotion['Emotion']['memo']); ?>&nbsp;</td>
 		<td><?php echo h($emotion['Emotion']['img1']); ?>&nbsp;</td>
-		<td><?php echo h($emotion['Emotion']['img_file']); ?>&nbsp;</td>
+<!-- 		<td><?php echo h($emotion['Emotion']['img_file']); ?>&nbsp;</td> -->
 		<td><?php echo h($emotion['Emotion']['created']); ?>&nbsp;</td>
 		<td><?php echo h($emotion['Emotion']['modified']); ?>&nbsp;</td>
 		<td class="actions">

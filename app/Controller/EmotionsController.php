@@ -49,6 +49,25 @@ class EmotionsController extends AppController {
 	public function add() {
     $this->layout = false;
 		if ($this->request->is('post')) {
+
+$ch = curl_init();
+$img_file = $this->request->data["Emotion"]["img_file"];
+$image_array = explode(',', $img_file);
+
+$data = array('api_key' => 'k7e9tRIzzHDflSkG', 
+              'api_secret' => 'l9lQe9mCjAmSEnEO', 
+              'jobs' => 'face_emotion_part',
+              'base64' => $image_array[1]);
+curl_setopt($ch, CURLOPT_URL, 'http://rekognition.com/func/api/');
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+curl_exec($ch);
+curl_close($ch);
+
+
+print_r($data);
+$this->request->data["Emotion"]["analyzed_emotion"] = $data["face_detection"]["emotion"];
+
 			$this->Emotion->create();
 			if ($this->Emotion->save($this->request->data)) {
 				$this->Session->setFlash(__('The emotion has been saved.'));

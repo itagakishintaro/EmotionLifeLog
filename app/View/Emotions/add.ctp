@@ -33,7 +33,7 @@
                 <h2><span class='label label-info'>今どんな気分？</span></h2>
                 <p>メモを書いて、今の感情に近いボタンを押してください。押したら、すぐに登録されます。</p>
                 <h3><span class='label label-default'>メモ</span></h3>
-                <?php echo $this->Form->input('memo', array('class' => 'form-control', 'rows' => '3', 'placeholder' => '空でもいいけど、入れると感情分析結果がみれるよ。'));?>
+                <?php echo $this->Form->input('memo', array('class' => 'form-control', 'rows' => '3', 'placeholder' => '空でもOK。'));?>
                 <div id='emotion'>
                     <h3>
                         <span class='label label-default'>感情の度合い</span>
@@ -80,7 +80,7 @@
                             <br>
                             <img id='max-angry' class='image'>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6"n>
                             Fear
                             <br>
                             <img id='max-fear' class='image'>

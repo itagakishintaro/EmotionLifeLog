@@ -15,14 +15,14 @@ class Emotion extends AppModel {
         return $this->find('all', $options);
     }
 
-    public function getMaxEmotionFaces() {
+    public function getMaxEmotionFaces($emotion) {
         $this->virtualFields['max'] = 0;
         $options = array(
-            'conditions' => array('NOT' => array('Emotion.img_file' => null)),
-            'fields' => array('Emotion.img_file', 'Emotion.my_emotion', 'MAX(Emotion.my_emotion_val) as Emotion__max'),
-            'group' => array('Emotion.my_emotion')
+            'conditions' => array('Emotion.my_emotion' => $emotion),
+            'fields' => array('Emotion.img_file', 'Emotion.my_emotion', 'Emotion.my_emotion_val as Emotion__max'),
+            'order' => array('Emotion.my_emotion_val DESC', 'Emotion.id DESC')
         );
-        return $this->find('all', $options);
+        return $this->find('first', $options);
     }
 
     public function getHistorical() {

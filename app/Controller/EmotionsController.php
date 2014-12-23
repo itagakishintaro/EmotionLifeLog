@@ -47,29 +47,39 @@ class EmotionsController extends AppController {
  * @return void
  */
 	public function add() {
-    $this->layout = false;
+    	$this->layout = false;
 		if ($this->request->is('post')) {
-
-$ch = curl_init();
-$img_file = $this->request->data["Emotion"]["img_file"];
-$image_array = explode(',', $img_file);
-
-$opts = array('api_key' => 'k7e9tRIzzHDflSkG', 
+			// rekognition apiに写真を送信して感情を取得
+			// 参考:http://d.hatena.ne.jp/tboffice/20091027/1256660197
+			$ch = curl_init();
+			$img_file = $this->request->data["Emotion"]["img_file"];
+			$image_array = explode(',', $img_file);
+			$opts = array('api_key' => 'k7e9tRIzzHDflSkG', 
               'api_secret' => 'l9lQe9mCjAmSEnEO', 
               'jobs' => 'face_emotion_part',
               'base64' => $image_array[1]);
-curl_setopt($ch, CURLOPT_URL, 'http://rekognition.com/func/api/');
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $opts);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$data = curl_exec($ch);
-$data = json_decode($data, true);
-curl_close($ch);
+			curl_setopt($ch, CURLOPT_URL, 'http://rekognition.com/func/api/');
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $opts);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			$data = curl_exec($ch);
+			$data = json_decode($data, true);
+			curl_close($ch);
 
+			// 取得した感情の最大値をrequestに設定
+			$max = 0; 
+			foreach($data["face_detection"][0]["emotion"] as $key => $value){
+				if($value > $max){
+					$max = $value;
+					$maxEmotion = $key;
+				}
+			}
+			$this->request->data["Emotion"]["analyzed_emotion"] 
+				= $maxEmotion;
+			$this->request->data["Emotion"]["analyzed_emotion_val"] 
+				= $data["face_detection"][0]["emotion"][$maxEmotion] * 100;
 
-print_r($data);
-$this->request->data["Emotion"]["analyzed_emotion"] = $data["face_detection"][0]["emotion"];
-
+			// データを保存
 			$this->Emotion->create();
 			if ($this->Emotion->save($this->request->data)) {
 				$this->Session->setFlash(__('The emotion has been saved.'));
@@ -78,6 +88,17 @@ $this->request->data["Emotion"]["analyzed_emotion"] = $data["face_detection"][0]
 				$this->Session->setFlash(__('The emotion could not be saved. Please, try again.'));
 			}
 		}
+	}
+
+	// Array ( [calm] => 0.83 [confused] => 0.29 [happy] => 0.03 )
+	public function getMaxEmotion($emotions){
+		$max = 0; 
+		foreach($emotions as $key => $value){
+			if($value > $max){
+				$maxKey = $key;
+			}
+		}
+		return $maxKey;
 	}
 
 	public function getMyEmotion() {
@@ -89,10 +110,13 @@ $this->request->data["Emotion"]["analyzed_emotion"] = $data["face_detection"][0]
 
 	public function getMaxEmotionFaces() {
 		$this->autoRender = false;
-    $faces = array("happy", "sad", "angry", "fear");
-    foreach ($faces as $v) {
-        $imageData[] = $this->Emotion->getMaxEmotionFaces($v);
-    }
+	    $faces = array("happy", "sad", "angry", "fear");
+	    foreach ($faces as $v) {
+	    	$emotion = $this->Emotion->getMaxEmotionFaces($v);
+	    	if( count($emotion) > 0 ){
+		        $imageData[] = $emotion;
+		    }
+	    }
 		echo json_encode($imageData);
 	}
 

@@ -36,7 +36,7 @@ function updateMaxFigures() {
                 var obj = result[i];
                 $("#max-" + obj.Emotion.my_emotion).attr("src", obj.Emotion.img_file);
             }
-        })
+        });
 }
 
 var capture = function() {

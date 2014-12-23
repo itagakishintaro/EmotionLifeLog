@@ -33,19 +33,6 @@ function createPiSelfData(jsonData) {
 }
 
 function drawLineSelf() {
-    // テスト用サンプル
-    // var jsonData = 
-    // [ {"Emotion": {"record_date":"2014-12-02 07:31:23",
-    //                "my_emotion":"fear","my_emotion_val":"50"}},
-    //   {"Emotion": {"record_date":"2014-12-02 07:31:31",
-    //                "my_emotion":"angry","my_emotion_val":"66"}},
-    //   {"Emotion": {"record_date":"2014-12-02 07:31:43",
-    //                "my_emotion":"sad","my_emotion_val":"27"}},
-    //   {"Emotion": {"record_date":"2014-12-02 07:31:53",
-    //                "my_emotion":"happy","my_emotion_val":"85"}},
-    //   {"Emotion": {"record_date":"2014-12-02 07:32:04",
-    //                "my_emotion":"happy","my_emotion_val":"58"}}]
-
     $.getJSON("/EmotionLifeLog/emotions/getHistorical", {},
         function(jsonData) {
             var data = createLineSelfData(jsonData);
@@ -74,6 +61,11 @@ function createLineSelfData(jsonData) {
 
     // 感情ごとに列に追加。該当しない場合は Empty.
     $.each(jsonData, function(i, v) {
+        // var date = v.Emotion.record_date.split(" ")[0];
+        // var year = date.split("-")[0];
+        // var month = date.split("-")[1] - 1;
+        // var day = date.split("-")[2];
+        // data.setValue(i, 0, new Date(year, month, day));
         data.setValue(i, 0, v.Emotion.record_date);
         switch(v.Emotion.my_emotion) {
           case "happy":
